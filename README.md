@@ -1,4 +1,4 @@
-# Resume Site — Paradon Lambensa
+# Portfolio Site — Paradon Lambensa
 
 เว็บ resume / portfolio หน้าเดียว เขียนด้วย HTML + CSS + JavaScript ล้วน
 ไม่มี framework ไม่มี build step ไม่มี dependency — เปิดไฟล์ `index.html` ก็ใช้ได้เลย
