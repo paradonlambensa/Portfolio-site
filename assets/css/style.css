@@ -799,6 +799,11 @@ main, .footer { position: relative; z-index: 1; }
 
   .card, .hero__portrait img { box-shadow: none !important; }
 
+  /* parallax เขียน transform ลงใน inline style ของรูป ซึ่งค้างอยู่ตอนสั่งพิมพ์
+     ถ้าไม่ล้าง คนที่เลื่อนหน้าลงมาก่อนกด Ctrl+P จะได้รูปที่เลื่อนหลุดกรอบ
+     ต้องใช้ !important เพราะ inline style ชนะ stylesheet ธรรมดา */
+  .hero__portrait img { transform: none !important; }
+
   body { font-size: 10.5pt; line-height: 1.45; background: #fff; }
   .js .reveal { opacity: 1 !important; transform: none !important; }
 

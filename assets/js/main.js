@@ -120,7 +120,13 @@
     if (sections.length && y + window.innerHeight >= document.documentElement.scrollHeight - 2) {
       current = sections.length - 1;
     }
-    if (pinnedIndex > -1) current = pinnedIndex;
+    if (pinnedIndex > -1) {
+      // พอเลื่อนมาถึงจุดที่คำนวณเองได้ตรงกับอันที่กด ก็ปล่อยการยึดได้แล้ว
+      // ไม่ปล่อยไม่ได้ เพราะการลากแถบเลื่อนไม่ยิง wheel/touchmove/keydown
+      // ไฮไลต์ก็จะค้างอยู่ที่อันที่กดไปตลอดจนกว่าจะหมุนล้อหรือกดปุ่ม
+      if (current === pinnedIndex) pinnedIndex = -1;
+      else current = pinnedIndex;
+    }
     for (var j = 0; j < links.length; j++) {
       links[j].classList.toggle('is-active', j === current);
     }
