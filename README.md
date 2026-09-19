@@ -6,7 +6,7 @@
 ## โครงไฟล์
 
 ```
-resume-site/
+Portfolio-site/
 ├── index.html              ← เว็บ portfolio เนื้อหาทั้งหมดอยู่ในไฟล์นี้
 ├── cv.html                 ← CV หน้าเดียว จัดมาให้พอดี A4 พิมพ์เป็น PDF ได้เลย
 ├── assets/
@@ -99,12 +99,13 @@ python -m http.server 5173
 
 ## Deploy ขึ้น GitHub Pages
 
-repo อยู่ที่ https://github.com/paradonlambensa/resume-site แล้ว เหลือแค่เปิด Pages:
+เปิด Pages ไว้แล้ว (Source: `main` / root) เว็บอยู่ที่
 
-**Settings → Pages → Source: Deploy from a branch → main / (root)**
+**https://paradonlambensa.github.io/Portfolio-site/**
 
-รอสักครู่จะได้ URL `https://paradonlambensa.github.io/resume-site/`
-ซึ่งตรงกับที่ตั้งไว้ใน `og:url` และ JSON-LD อยู่แล้ว ไม่ต้องแก้อะไรเพิ่ม
+> ⚠️ **ถ้าเปลี่ยนชื่อ repo อีก URL ของ Pages จะเปลี่ยนตาม** และลิงก์ที่ฝังไว้ในโค้ดจะตาย
+> ต้องไล่แก้ `og:url`, `og:image`, JSON-LD ใน `index.html` และลิงก์ใน `cv.html` ด้วย
+> หาได้ด้วย `grep -rn 'github.io' index.html cv.html`
 
 ครั้งต่อ ๆ ไปแค่ push ก็ deploy เอง:
 
