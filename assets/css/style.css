@@ -19,7 +19,9 @@
   --shadow:      0 1px 2px rgba(17, 17, 16, 0.04), 0 8px 24px rgba(17, 17, 16, 0.05);
 
   --font-sans: "Inter", "IBM Plex Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  /* IBM Plex Sans Thai ต้องอยู่ในสแต็ก mono ด้วย เพราะ JetBrains Mono ไม่มีสระไทย
+     และมีข้อความไทยใช้ฟอนต์นี้อยู่ (วันที่ในไทม์ไลน์, สถานะใต้ nav) */
+  --font-mono: "JetBrains Mono", "IBM Plex Sans Thai", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
   --wrap: 1180px;
   --gutter: 24px;
@@ -146,6 +148,36 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------------------------- 4. components ----------------------------- */
+
+/* --- i18n: แสดงเฉพาะภาษาที่ <html lang> เลือกไว้ ---
+   ข้อความทั้งสองภาษาอยู่ใน HTML จริง แค่ซ่อนอันที่ไม่ได้เลือก
+   เพราะงั้นปิด JS ก็ยังอ่านได้ และ Google ยังเห็นครบทั้งสองภาษา  */
+:root[lang="en"] [lang="th"],
+:root[lang="th"] [lang="en"] { display: none; }
+
+/* --- language toggle --- */
+.langbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 34px;
+  padding: 0 10px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease);
+}
+.langbtn:hover { border-color: var(--ink); }
+.langbtn__sep { opacity: 0.4; }
+.langbtn__opt { transition: color 0.2s var(--ease); }
+/* ปุ่มนี้โชว์ทั้งสองภาษาเสมอ ตัวที่ใช้อยู่จะเข้มกว่า */
+:root[lang="en"] .langbtn__opt[data-l="en"],
+:root[lang="th"] .langbtn__opt[data-l="th"] { color: var(--ink); font-weight: 500; }
 
 /* --- nav --- */
 .nav {
@@ -554,6 +586,8 @@ a { color: inherit; text-decoration: none; }
 
   .nav__actions .nav__burger { display: grid; }
   .nav__brandname { display: none; }
+  /* nav แน่นเกินไปเมื่อมีปุ่มภาษาเพิ่มเข้ามา — ตัดปุ่มนี้ออก เพราะ hero มีให้อยู่แล้ว */
+  .nav__cv { display: none; }
   .nav__inner { gap: 12px; }
 
   .nav__links {

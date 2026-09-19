@@ -24,6 +24,35 @@
     });
   }
 
+  /* ------------------------------ language ------------------------------
+     ข้อความทั้งสองภาษาอยู่ใน HTML แล้ว CSS เป็นคนซ่อน/แสดงตาม <html lang>
+     ที่นี่แค่สลับค่า lang, จำไว้, และอัปเดตของที่ CSS จัดการไม่ได้ (ชื่อแท็บ)
+     ---------------------------------------------------------------------- */
+  var restoreCopyLabel = function () {};   // ถูกแทนที่จริงในส่วน copy email ข้างล่าง
+
+  function applyLang(lang) {
+    root.lang = lang;
+    var title = root.dataset[lang === 'th' ? 'titleTh' : 'titleEn'];
+    if (title) document.title = title;
+    restoreCopyLabel();   // ปุ่ม copy อาจค้างคำว่า "Copied" ภาษาเดิมอยู่
+  }
+
+  // head script ตั้ง lang ไว้แล้ว — เรียกซ้ำเพื่อให้ชื่อแท็บตรงกับภาษาที่เลือก
+  applyLang(root.lang === 'th' ? 'th' : 'en');
+
+  var langToggle = document.getElementById('langToggle');
+  if (langToggle) {
+    langToggle.addEventListener('click', function () {
+      var next = root.lang === 'th' ? 'en' : 'th';
+      applyLang(next);
+      try {
+        localStorage.setItem('lang', next);
+      } catch (e) { /* ไม่จำข้ามหน้า แต่สลับได้ปกติ */ }
+      // ความสูงของหน้าเปลี่ยนไปตามความยาวข้อความ — คำนวณ scroll-spy ใหม่
+      onScroll();
+    });
+  }
+
   /* ------------------------ nav: burger + stuck ------------------------- */
   var nav = document.getElementById('nav');
   var navLinks = document.getElementById('navLinks');
@@ -113,12 +142,28 @@
   /* ----------------------------- copy email ----------------------------- */
   var copyBtn = document.getElementById('copyEmail');
   if (copyBtn) {
+    // ปุ่มนี้มี span สองภาษาอยู่ข้างใน — เก็บ innerHTML ไว้ก่อนจะทับด้วยคำว่า "Copied"
+    // ถ้าใช้ textContent เก็บ/คืน span จะหายไปทั้งคู่และปุ่มจะว่างเปล่าหลังสลับภาษา
+    var copyOriginal = copyBtn.innerHTML;
+    var copyTimer = null;
+
+    restoreCopyLabel = function () {
+      if (copyTimer === null) return;
+      clearTimeout(copyTimer);
+      copyTimer = null;
+      copyBtn.innerHTML = copyOriginal;
+    };
+
     copyBtn.addEventListener('click', function () {
       var email = copyBtn.dataset.email || '';
       var done = function () {
-        var original = copyBtn.textContent;
-        copyBtn.textContent = 'Copied';
-        setTimeout(function () { copyBtn.textContent = original; }, 1600);
+        copyBtn.textContent =
+          copyBtn.dataset[root.lang === 'th' ? 'copiedTh' : 'copiedEn'] || 'Copied';
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(function () {
+          copyTimer = null;
+          copyBtn.innerHTML = copyOriginal;
+        }, 1600);
       };
 
       if (navigator.clipboard && window.isSecureContext) {
