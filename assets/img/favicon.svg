@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <style>
+    .plate { fill: #111110; }
+    .mark  { fill: #faf9f6; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 26px; font-weight: 500; letter-spacing: -0.5px; }
+    @media (prefers-color-scheme: dark) {
+      .plate { fill: #f3f2ed; }
+      .mark  { fill: #0e0e0d; }
+    }
+  </style>
+  <rect class="plate" width="64" height="64" rx="12" />
+  <!-- [แก้] เปลี่ยน YN เป็นอักษรย่อของคุณ -->
+  <text class="mark" x="32" y="41" text-anchor="middle">YN</text>
+</svg>
