@@ -565,6 +565,9 @@ main, .footer { position: relative; z-index: 1; }
   font-size: 0.94rem;
   color: var(--ink-2);
 }
+/* เน้นชื่อผลงาน/ชื่อทีมในบรรทัด bullet ให้เด่นขึ้นมาจากข้อความสีจาง */
+.job__points strong { font-weight: 600; color: var(--ink); }
+
 .job__points li::before {
   content: "";
   position: absolute;
