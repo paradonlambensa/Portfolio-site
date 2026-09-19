@@ -623,6 +623,23 @@ main, .footer { position: relative; z-index: 1; }
 .card__year { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-3); }
 .card__desc { margin: 0; font-size: 0.92rem; color: var(--ink-2); }
 
+/* บรรทัดเล็ก ๆ ใต้ชื่อการ์ด สำหรับรางวัล/เวทีที่ส่งเข้าแข่ง */
+.card__note {
+  margin: -6px 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--accent);
+}
+
+/* ลิงก์ที่แทรกอยู่กลางประโยคใน bullet */
+.job__points a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.2s var(--ease);
+}
+.job__points a:hover { color: var(--accent); }
+
 /* การ์ดผลงานใช้ bullet ชุดเดียวกับไทม์ไลน์ แต่ย่อขนาดลงให้พอดีการ์ด */
 .card .job__points { margin-bottom: 4px; }
 .card .job__points li { font-size: 0.86rem; }
