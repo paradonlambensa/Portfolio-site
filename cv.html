@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  CV หน้าเดียว — ออกแบบให้พอดีกระดาษ A4 หนึ่งหน้าพอดี
+  กด Ctrl/Cmd + P แล้วเลือก "Save as PDF" ได้ไฟล์ส่งสมัครงานเลย
+
+  สิ่งที่เห็นบนจอ = สิ่งที่พิมพ์ออกมา (กล่อง .page กว้าง 210mm สูง 297mm)
+  ถ้าเพิ่มเนื้อหาจนล้น จะมีเส้นแดงเตือนขึ้นที่ขอบล่างของหน้า
+
+  สองภาษาใช้กลไกเดียวกับหน้าหลัก และจำค่าร่วมกัน (localStorage 'lang')
+  จุดที่ยังต้องเติมมีคอมเมนต์ [แก้] กำกับไว้
+  ============================================================
+-->
+<html lang="th"
+      data-title-en="Paradon Lambensa — CV"
+      data-title-th="Paradon Lambensa — เรซูเม่">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paradon Lambensa — CV</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+
+<script>
+  try {
+    var saved = localStorage.getItem('lang');
+    document.documentElement.lang = saved ||
+      (String(navigator.language || '').toLowerCase().indexOf('en') === 0 ? 'en' : 'th');
+  } catch (e) { /* ใช้ค่าตั้งต้น th */ }
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/cv.css" />
+</head>
+
+<body>
+
+<!-- แถบควบคุม — ไม่ถูกพิมพ์ออกมา -->
+<div class="toolbar">
+  <a class="toolbar__back" href="index.html">← <span lang="en">Full portfolio</span><span lang="th">กลับหน้าเว็บเต็ม</span></a>
+  <button class="langbtn" id="langToggle" type="button" aria-label="Switch language / เปลี่ยนภาษา">
+    <span class="langbtn__opt" data-l="en">EN</span>
+    <span class="langbtn__sep" aria-hidden="true">/</span>
+    <span class="langbtn__opt" data-l="th">ไทย</span>
+  </button>
+  <button class="toolbar__print" id="printBtn" type="button"><span lang="en">Save as PDF</span><span lang="th">บันทึกเป็น PDF</span></button>
+</div>
+
+<main class="page" id="page">
+
+  <!-- ============================ หัวกระดาษ ============================ -->
+  <header class="head">
+    <img class="head__photo" src="assets/img/portrait.png" alt="Paradon Lambensa" width="640" height="640" />
+    <div class="head__text">
+      <h1 class="head__name">Paradon Lambensa</h1>
+      <p class="head__role"><span lang="en">Fullstack Developer · Business Information Systems Student</span><span lang="th">Fullstack Developer · นักศึกษาการจัดการระบบสารสนเทศทางธุรกิจ</span></p>
+      <ul class="head__contact">
+        <li><a href="mailto:Pakapong.lam@gmail.com">Pakapong.lam@gmail.com</a></li>
+        <li><a href="https://github.com/paradonlambensa">github.com/paradonlambensa</a></li>
+        <li><a href="https://paradonlambensa.github.io/resume-site/">paradonlambensa.github.io/resume-site</a></li>
+        <li><span lang="en">Thailand</span><span lang="th">ประเทศไทย</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============================ แนะนำตัว ============================ -->
+  <p class="summary">
+    <span lang="en">Third-year Business Information Systems Management student at Prince of Songkla University, working toward fullstack. I build both ends myself — Express, MongoDB and Socket.IO on the server, hand-written HTML, CSS and JavaScript on the screen. I work methodically, plan ahead and deliver on time. Looking for a fullstack or web development internship.</span><span lang="th">นักศึกษาชั้นปีที่ 3 สาขาการจัดการระบบสารสนเทศทางธุรกิจ มหาวิทยาลัยสงขลานครินทร์ ตั้งเป้าเป็น Fullstack Developer ลงมือทำเองทั้งสองฝั่ง — หลังบ้านใช้ Express, MongoDB และ Socket.IO ส่วนหน้าเว็บเขียนด้วย HTML, CSS และ JavaScript ล้วน ทำงานเป็นระบบ วางแผนล่วงหน้า และส่งงานตรงเวลา กำลังมองหาที่ฝึกงานสาย Fullstack หรือพัฒนาเว็บ</span>
+  </p>
+
+  <div class="cols">
+
+    <!-- ======================== คอลัมน์ซ้าย ======================== -->
+    <aside class="col col--side">
+
+      <section class="block">
+        <h2 class="block__title"><span lang="en">Skills</span><span lang="th">ทักษะ</span></h2>
+
+        <div class="skill">
+          <h3 class="skill__label"><span lang="en">Frontend</span><span lang="th">หน้าบ้าน</span></h3>
+          <p class="skill__list">HTML · CSS · JavaScript</p>
+        </div>
+        <div class="skill">
+          <h3 class="skill__label"><span lang="en">Backend</span><span lang="th">หลังบ้าน</span></h3>
+          <p class="skill__list">Node.js · Express · Socket.IO · Python · Streamlit</p>
+        </div>
+        <div class="skill">
+          <h3 class="skill__label"><span lang="en">Database &amp; data</span><span lang="th">ฐานข้อมูลและข้อมูล</span></h3>
+          <p class="skill__list">MongoDB · pandas · Plotly</p>
+        </div>
+        <div class="skill">
+          <h3 class="skill__label"><span lang="en">Tools</span><span lang="th">เครื่องมือ</span></h3>
+          <p class="skill__list">Git · GitHub · VS Code · Azure</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__title"><span lang="en">Education</span><span lang="th">การศึกษา</span></h2>
+        <div class="entry">
+          <h3 class="entry__title"><span lang="en">Business Information Systems Management</span><span lang="th">การจัดการระบบสารสนเทศทางธุรกิจ</span></h3>
+          <p class="entry__org"><span lang="en">Prince of Songkla University</span><span lang="th">มหาวิทยาลัยสงขลานครินทร์</span></p>
+          <!-- [แก้] อยากใส่ปีที่เข้า–ปีที่คาดว่าจบ หรือ GPA ก็แก้บรรทัดล่างนี้ เช่น "2024 — 2028 · GPA 3.5x" -->
+          <p class="entry__meta"><span lang="en">3rd year · in progress</span><span lang="th">ชั้นปีที่ 3 · กำลังศึกษา</span></p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__title"><span lang="en">Links</span><span lang="th">ลิงก์</span></h2>
+        <ul class="links">
+          <li><span class="links__k">Portfolio</span><a href="https://paradonlambensa.github.io/resume-site/">paradonlambensa.github.io/resume-site</a></li>
+          <li><span class="links__k">GitHub</span><a href="https://github.com/paradonlambensa">github.com/paradonlambensa</a></li>
+          <!-- [แก้] มี LinkedIn แล้วก๊อป <li> ข้างบนมาเติมได้เลย -->
+        </ul>
+      </section>
+
+    </aside>
+
+    <!-- ======================== คอลัมน์ขวา ======================== -->
+    <div class="col col--main">
+
+      <section class="block">
+        <h2 class="block__title"><span lang="en">Projects</span><span lang="th">ผลงาน</span></h2>
+
+        <!-- [แก้] ก๊อปบล็อก .entry ทั้งก้อนเพื่อเพิ่มผลงาน แต่ระวังพื้นที่จะล้นหน้า -->
+        <div class="entry">
+          <div class="entry__head">
+            <h3 class="entry__title">Knowbridge</h3>
+            <span class="entry__year">2026</span>
+          </div>
+          <p class="entry__desc"><span lang="en">A skill-swap platform: members list what they can teach and want to learn, get matched, send exchange requests, and chat in real time once accepted.</span><span lang="th">แพลตฟอร์มแลกเปลี่ยนทักษะ สมาชิกระบุสิ่งที่สอนได้และอยากเรียน ระบบจับคู่ให้ ส่งคำขอแลกเปลี่ยน และคุยกันแบบเรียลไทม์เมื่อตอบรับ</span></p>
+          <ul class="entry__points">
+            <li><span lang="en">Built the whole stack: auth with bcrypt and sessions, MongoDB data model, Socket.IO chat, and a frontend with no framework.</span><span lang="th">ทำเองทั้งระบบ — สมาชิกด้วย bcrypt และ session, โครงข้อมูลบน MongoDB, แชทด้วย Socket.IO และหน้าเว็บที่ไม่ใช้เฟรมเวิร์ก</span></li>
+          </ul>
+          <p class="entry__tech">Node.js · Express · Socket.IO · MongoDB · JavaScript</p>
+        </div>
+
+        <div class="entry">
+          <div class="entry__head">
+            <h3 class="entry__title">Cygnus AI <span class="entry__alt">(BuddyCash)</span></h3>
+            <span class="entry__year">2026</span>
+          </div>
+          <p class="entry__desc"><span lang="en">An AI financial advisor for small retailers — turns POS sales data into advice a shop owner can act on.</span><span lang="th">ที่ปรึกษาการเงินด้วย AI สำหรับร้านค้ารายย่อย เปลี่ยนข้อมูลการขายจาก POS ให้เป็นคำแนะนำที่เจ้าของร้านใช้ได้จริง</span></p>
+          <ul class="entry__points">
+            <li><span lang="en">Designed a hybrid architecture: Python computes every financial figure, the AI only interprets them — and only aggregates are sent, never raw records.</span><span lang="th">ออกแบบสถาปัตยกรรมแบบ Hybrid ให้ Python คำนวณตัวเลขการเงินทั้งหมด AI ทำหน้าที่ตีความอย่างเดียว และส่งเฉพาะตัวเลขสรุป ไม่ส่งข้อมูลดิบ</span></li>
+            <li><span lang="en">Reads receipts with vision OCR and converts them to CSV the dashboard imports directly.</span><span lang="th">อ่านสลิปด้วย vision OCR แล้วแปลงเป็น CSV นำเข้าแดชบอร์ดได้ทันที</span></li>
+          </ul>
+          <p class="entry__tech">Python · Streamlit · pandas · Plotly · Claude API</p>
+        </div>
+
+        <div class="entry">
+          <div class="entry__head">
+            <h3 class="entry__title"><span lang="en">Portfolio site</span><span lang="th">เว็บ Portfolio</span></h3>
+            <span class="entry__year">2026</span>
+          </div>
+          <p class="entry__desc"><span lang="en">Static HTML, CSS and JavaScript with no framework and no build step. Thai/English switching is done in CSS, so the content still works with JavaScript off. This CV is a print stylesheet on the same codebase.</span><span lang="th">เขียนด้วย HTML, CSS และ JavaScript ล้วน ไม่มีเฟรมเวิร์ก ไม่ต้อง build สลับไทย/อังกฤษด้วย CSS เพราะงั้นปิด JavaScript แล้วยังอ่านได้ครบ และ CV ฉบับนี้ก็มาจากโค้ดชุดเดียวกัน</span></p>
+          <p class="entry__tech">HTML · CSS · JavaScript · GitHub Pages</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="block__title"><span lang="en">Activities</span><span lang="th">กิจกรรม</span></h2>
+        <div class="entry">
+          <div class="entry__head">
+            <h3 class="entry__title">PSU Future Tech Challenge 2026</h3>
+            <span class="entry__year"><span lang="en">Student category</span><span lang="th">ประเภทนักศึกษา</span></span>
+          </div>
+          <p class="entry__org">PSU Cyber &amp; AI · <span lang="en">Prince of Songkla University</span><span lang="th">มหาวิทยาลัยสงขลานครินทร์</span></p>
+          <ul class="entry__points">
+            <li><span lang="en">Entered <strong>BuddyCash (AI CFO Cash Flow)</strong> in the prototype track, shipping running code rather than a slide deck.</span><span lang="th">ส่งผลงาน <strong>BuddyCash (AI CFO Cash Flow)</strong> เข้าแข่งในสาย Prototype โดยทำออกมาเป็นของที่รันได้จริง ไม่ใช่แค่สไลด์</span></li>
+            <!-- [แก้] เพิ่มผลการแข่งขันตรงนี้ เช่น "ได้รางวัลรองชนะเลิศอันดับ 1" หรือ "เข้ารอบ 10 ทีมสุดท้าย"
+                 ก๊อปรูปแบบ <li> ข้างบนมาใช้ได้เลย — เป็นข้อมูลที่ควรอยู่บน CV มากที่สุด -->
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- เส้นเตือนตอนเนื้อหาล้นหน้า (ไม่ถูกพิมพ์) -->
+  <div class="overflow-warn" id="overflowWarn" hidden>
+    <span lang="en">Content overflows one A4 page — trim something above.</span><span lang="th">เนื้อหาล้นเกิน A4 หนึ่งหน้า — ต้องตัดอะไรออกบ้าง</span>
+  </div>
+</main>
+
+<script>
+  (function () {
+    'use strict';
+    var root = document.documentElement;
+
+    function applyLang(lang) {
+      root.lang = lang;
+      var t = root.dataset[lang === 'th' ? 'titleTh' : 'titleEn'];
+      if (t) document.title = t;
+    }
+    applyLang(root.lang === 'th' ? 'th' : 'en');
+
+    var langToggle = document.getElementById('langToggle');
+    if (langToggle) {
+      langToggle.addEventListener('click', function () {
+        var next = root.lang === 'th' ? 'en' : 'th';
+        applyLang(next);
+        try { localStorage.setItem('lang', next); } catch (e) {}
+        checkOverflow();   // ความยาวข้อความต่างกันตามภาษา ต้องวัดใหม่
+      });
+    }
+
+    var printBtn = document.getElementById('printBtn');
+    if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+
+    // เตือนตอนแก้เนื้อหาแล้วยาวเกินหนึ่งหน้า จะได้ไม่เผลอพิมพ์ออกมาเป็นสองหน้า
+    var page = document.getElementById('page');
+    var warn = document.getElementById('overflowWarn');
+    function checkOverflow() {
+      if (!page || !warn) return;
+      warn.hidden = page.scrollHeight <= page.clientHeight + 1;
+    }
+    window.addEventListener('resize', checkOverflow);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(checkOverflow);
+    checkOverflow();
+  })();
+</script>
+</body>
+</html>

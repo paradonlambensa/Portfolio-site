@@ -238,13 +238,6 @@
     });
   }
 
-  /* ------------------------- download CV = print ------------------------ */
-  // print stylesheet ใน style.css จัดหน้าให้เป็น CV อยู่แล้ว
-  ['printBtn', 'printBtn2'].forEach(function (id) {
-    var btn = document.getElementById(id);
-    if (btn) btn.addEventListener('click', function () { window.print(); });
-  });
-
   /* ------------------------------ footer -------------------------------- */
   var year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
