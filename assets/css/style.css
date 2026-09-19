@@ -113,6 +113,9 @@ a { color: inherit; text-decoration: none; }
 
 .section { padding: clamp(64px, 9vw, 120px) 0; border-top: 1px solid var(--line); }
 
+/* กดลิงก์ใน nav แล้วอย่าให้หัวข้อไปมุดอยู่ใต้ nav ที่ลอยอยู่ */
+section[id] { scroll-margin-top: 72px; }
+
 .section__grid {
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr);
@@ -380,15 +383,15 @@ a { color: inherit; text-decoration: none; }
 }
 .hero__meta a:hover { color: var(--accent); border-bottom-color: currentColor; }
 
-.hero__portrait { margin: 0; }
+/* รูปถูก crop มาพอดีวงแหวนสีน้ำเงินแล้ว (สคริปต์ตอนใส่รูป) — border-radius:50%
+   จึงลงล็อกพอดี และมุมขาว ๆ นอกวงถูกตัดทิ้งไปเอง ไม่ต้องมี border ซ้อนอีก */
+.hero__portrait { margin: 0 0 0 auto; max-width: 320px; }
 .hero__portrait img {
   width: 100%;
   height: auto;
-  aspect-ratio: 13 / 16;
+  aspect-ratio: 1;
   object-fit: cover;
-  border-radius: var(--radius);
-  background: var(--bg-alt);
-  border: 1px solid var(--line);
+  border-radius: 50%;
 }
 
 /* --- stats --- */
@@ -488,6 +491,10 @@ a { color: inherit; text-decoration: none; }
 .card__year { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-3); }
 .card__desc { margin: 0; font-size: 0.92rem; color: var(--ink-2); }
 
+/* การ์ดผลงานใช้ bullet ชุดเดียวกับไทม์ไลน์ แต่ย่อขนาดลงให้พอดีการ์ด */
+.card .job__points { margin-bottom: 4px; }
+.card .job__points li { font-size: 0.86rem; }
+
 .card__links { display: flex; gap: 16px; margin-top: auto; padding-top: 6px; }
 .card__links a {
   font-family: var(--font-mono);
@@ -574,7 +581,7 @@ a { color: inherit; text-decoration: none; }
 /* ---------------------------- 6. responsive ----------------------------- */
 @media (max-width: 900px) {
   .hero__grid { grid-template-columns: minmax(0, 1fr); }
-  .hero__portrait { order: -1; max-width: 240px; }
+  .hero__portrait { order: -1; max-width: 200px; margin-left: 0; }
   .section__grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .section__head { position: static; flex-direction: row; align-items: baseline; gap: 12px; }
   .job { grid-template-columns: minmax(0, 1fr); gap: 10px; }
@@ -620,8 +627,9 @@ a { color: inherit; text-decoration: none; }
     --ink-3: #555; --line: #ccc; --accent: #000; --shadow: none;
   }
 
+  /* รูปถ่ายเก็บไว้ตอนพิมพ์ เพราะ CV ไทยส่วนใหญ่ติดรูป */
   .nav, .progress, .skip-link, .hero__cta, .footer__top,
-  .hero__portrait, .card__links, .stats { display: none !important; }
+  .card__links, .stats { display: none !important; }
 
   body { font-size: 10.5pt; line-height: 1.45; background: #fff; }
   .js .reveal { opacity: 1 !important; transform: none !important; }
@@ -630,8 +638,10 @@ a { color: inherit; text-decoration: none; }
   .section__grid { grid-template-columns: 110pt minmax(0, 1fr); gap: 14pt; }
   .section__head { position: static; }
   .hero { padding: 0 0 10pt; }
-  /* ซ่อนรูปแล้วต้องยุบ grid เป็นคอลัมน์เดียว ไม่งั้นเหลือช่องว่าง 1/3 หน้า */
-  .hero__grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  /* คอลัมน์รูปบีบให้พอดีรูปเล็ก ไม่งั้นจะกินพื้นที่หน้ากระดาษไป 1/3 */
+  .hero__grid { grid-template-columns: minmax(0, 1fr) 82pt; gap: 14pt; align-items: start; }
+  .hero__portrait { max-width: none; margin: 0; }
+  .hero__portrait img { width: 82pt; height: 82pt; }
   .hero__name { font-size: 30pt; margin-bottom: 6pt; }
   .hero__pitch { margin-bottom: 8pt; }
   .eyebrow { margin-bottom: 8pt; }

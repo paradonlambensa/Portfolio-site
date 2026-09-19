@@ -64,11 +64,12 @@
       burger.setAttribute('aria-expanded', String(open));
     });
     // ปิดเมนูหลังกดลิงก์บนมือถือ
+    // ต้องใช้ closest('a') ไม่ใช่ e.target.tagName เพราะข้างในลิงก์มี <span lang>
+    // ครอบข้อความอยู่ — คลิกจะโดน span ไม่ใช่ <a>
     navLinks.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        navLinks.classList.remove('is-open');
-        burger.setAttribute('aria-expanded', 'false');
-      }
+      if (!e.target.closest || !e.target.closest('a')) return;
+      navLinks.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
     });
   }
 
@@ -81,6 +82,19 @@
 
   var ticking = false;
 
+  // section ท้าย ๆ ของหน้าสั้น ๆ เลื่อนขึ้นไปชิดบนไม่ได้ (หน้าหมดก่อน) กดลิงก์ไปแล้ว
+  // scroll-spy จึงคำนวณได้เป็นอันอื่นเสมอ — ยึดอันที่ผู้ใช้กดไว้จนกว่าจะเลื่อนเอง
+  var pinnedIndex = -1;
+  if (navLinks) {
+    navLinks.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a');
+      if (a) pinnedIndex = links.indexOf(a);
+    });
+  }
+  ['wheel', 'touchmove', 'keydown'].forEach(function (evt) {
+    window.addEventListener(evt, function () { pinnedIndex = -1; }, { passive: true });
+  });
+
   function onScroll() {
     var y = window.scrollY || window.pageYOffset;
 
@@ -91,16 +105,20 @@
       progress.style.width = (max > 0 ? Math.min(y / max, 1) * 100 : 0) + '%';
     }
 
-    // section ที่ active = อันสุดท้ายที่ขอบบนเลยใต้ nav ไปแล้ว
+    // active = section สุดท้ายที่ขอบบนขึ้นมาเหนือ "เส้นอ่าน" (ใต้ nav ลงมา 20% ของจอ)
+    // ใช้เส้นอ่านแทนขอบบนจอเฉย ๆ เพราะบนหน้าสั้น section ท้าย ๆ เลื่อนไปชิดบนไม่ได้
+    // เลยไม่มีทางถูกไฮไลต์เลยสักครั้ง
     var offset = (nav ? nav.offsetHeight : 0) + 24;
+    var line = offset + window.innerHeight * 0.2;
     var current = -1;
     for (var i = 0; i < sections.length; i++) {
-      if (sections[i].getBoundingClientRect().top - offset <= 0) current = i;
+      if (sections[i].getBoundingClientRect().top <= line) current = i;
     }
     // ถึงท้ายหน้าแล้วให้ไฮไลต์ section สุดท้ายเสมอ
     if (sections.length && y + window.innerHeight >= document.documentElement.scrollHeight - 2) {
       current = sections.length - 1;
     }
+    if (pinnedIndex > -1) current = pinnedIndex;
     for (var j = 0; j < links.length; j++) {
       links[j].classList.toggle('is-active', j === current);
     }

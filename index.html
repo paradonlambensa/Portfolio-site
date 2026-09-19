@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <!--
   ============================================================
-  RESUME SITE — จุดที่ต้องแก้ทั้งหมดถูกทำเครื่องหมายด้วย  [แก้]
-  ไล่หาคำว่า  [แก้]  ในไฟล์นี้แล้วแทนที่ด้วยข้อมูลจริงได้เลย
+  RESUME — Paradon Lambensa
+  จุดที่ยังต้องเติม/ตรวจ ทำเครื่องหมายไว้ด้วย  [แก้]
 
-  สองภาษา: ทุกข้อความมีคู่กันแบบนี้
+  สองภาษา: ข้อความที่ต้องแปลจะมาคู่กันแบบนี้
       <span lang="en">English</span><span lang="th">ไทย</span>
-  CSS จะซ่อนอันที่ไม่ได้เลือกให้เอง — แก้ทั้งสองอันด้วยนะ
+  CSS ซ่อนอันที่ไม่ได้เลือกให้เอง — แก้ทั้งสองอันด้วย
+  ชื่อคน ชื่อโปรเจค และชื่อเทคโนโลยี ไม่ต้องแปล ปล่อยไว้อันเดียว
 
-  กฎเดียวที่ห้ามผิด: span ภาษาต้องอยู่ "ข้างใน" element ที่มี class
-  reveal เสมอ ห้ามเอา reveal ไปแปะบน span ภาษา ไม่งั้นตอนสลับภาษา
-  ข้อความจะโผล่มาแบบจาง ๆ ค้างอยู่
+  กฎเดียวที่ห้ามผิด: class="reveal" ต้องอยู่บน element ที่ "ครอบ"
+  span ภาษาไว้เสมอ ห้ามเอาไปแปะบน span ภาษาเอง ไม่งั้นตอนสลับภาษา
+  ข้อความจะโผล่มาจาง ๆ ค้างอยู่
   ============================================================
 -->
-<!-- [แก้] data-title-* คือชื่อแท็บของแต่ละภาษา -->
-<html lang="en" data-theme="light"
-      data-title-en="Your Name — Software Engineer"
-      data-title-th="ชื่อ นามสกุล — วิศวกรซอฟต์แวร์">
+<html lang="th" data-theme="light"
+      data-title-en="Paradon Lambensa — Frontend Developer"
+      data-title-th="Paradon Lambensa — Frontend Developer">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- [แก้] SEO: ชื่อ + ตำแหน่ง (ตัวนี้คือค่าตั้งต้นก่อน JS ทำงาน) -->
-<title>Your Name — Software Engineer</title>
-<meta name="description" content="Software engineer focused on building fast, accessible products for the web. Selected work, experience and contact." />
-<meta name="author" content="Your Name" />
+<title>Paradon Lambensa — Frontend Developer</title>
+<meta name="description" content="Third-year Business Information Systems student at Prince of Songkla University. Web projects, skills and contact." />
+<meta name="author" content="Paradon Lambensa" />
 
-<!-- [แก้] Open Graph — ภาพตัวอย่างตอนแชร์ลิงก์ (เปลี่ยน og:url เป็น URL จริงหลัง deploy) -->
+<!-- [แก้] ถ้า deploy ที่อื่นนอกจาก GitHub Pages ให้เปลี่ยน og:url กับ og:image -->
 <meta property="og:type" content="profile" />
-<meta property="og:title" content="Your Name — Software Engineer" />
-<meta property="og:description" content="Software engineer focused on building fast, accessible products for the web." />
-<meta property="og:url" content="https://example.com/" />
-<meta property="og:image" content="https://example.com/assets/img/og-cover.png" />
+<meta property="og:title" content="Paradon Lambensa — Frontend Developer" />
+<meta property="og:description" content="Third-year Business Information Systems student at Prince of Songkla University. Web projects, skills and contact." />
+<meta property="og:url" content="https://paradonlambensa.github.io/resume-site/" />
+<meta property="og:image" content="https://paradonlambensa.github.io/resume-site/assets/img/portrait.png" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
@@ -47,10 +46,10 @@
     } catch (e) { /* storage ปิดอยู่ — ใช้ค่าที่ติดมากับ <html> */ }
     try {
       var savedLang = localStorage.getItem('lang');
-      // ยังไม่เคยเลือก → เดาจากภาษาเบราว์เซอร์
+      // ยังไม่เคยเลือก → เดาจากภาษาเบราว์เซอร์ (ค่าตั้งต้นของหน้านี้คือไทย)
       el.lang = savedLang ||
-        (String(navigator.language || '').toLowerCase().indexOf('th') === 0 ? 'th' : 'en');
-    } catch (e) { /* ค่าตั้งต้น en */ }
+        (String(navigator.language || '').toLowerCase().indexOf('en') === 0 ? 'en' : 'th');
+    } catch (e) { /* ใช้ค่าตั้งต้น th */ }
   })();
 </script>
 
@@ -67,16 +66,15 @@
 <!-- ============================ NAV ============================ -->
 <header class="nav" id="nav">
   <div class="nav__inner">
-    <!-- [แก้] อักษรย่อ + ชื่อ -->
     <a class="nav__brand" href="#top">
-      <span class="nav__mark">YN</span>
-      <span class="nav__brandname"><span lang="en">Your Name</span><span lang="th">ชื่อ นามสกุล</span></span>
+      <span class="nav__mark">PL</span>
+      <span class="nav__brandname">Paradon Lambensa</span>
     </a>
 
     <nav class="nav__links" id="navLinks" aria-label="Sections">
       <a href="#about"><span lang="en">About</span><span lang="th">เกี่ยวกับ</span></a>
-      <a href="#experience"><span lang="en">Experience</span><span lang="th">ประสบการณ์</span></a>
       <a href="#projects"><span lang="en">Projects</span><span lang="th">ผลงาน</span></a>
+      <a href="#activities"><span lang="en">Activities</span><span lang="th">กิจกรรม</span></a>
       <a href="#skills"><span lang="en">Skills</span><span lang="th">ทักษะ</span></a>
       <a href="#education"><span lang="en">Education</span><span lang="th">การศึกษา</span></a>
       <a href="#contact"><span lang="en">Contact</span><span lang="th">ติดต่อ</span></a>
@@ -107,48 +105,31 @@
     <div class="hero__text">
       <p class="eyebrow reveal">
         <span class="dot" aria-hidden="true"></span>
-        <!-- [แก้] สถานะการหางาน -->
-        <span lang="en">Available for new work · Bangkok, TH</span><span lang="th">พร้อมรับงานใหม่ · กรุงเทพฯ</span>
+        <span lang="en">Looking for an internship · Thailand</span><span lang="th">กำลังหาที่ฝึกงาน · ประเทศไทย</span>
       </p>
 
-      <!-- [แก้] ชื่อ-นามสกุล -->
-      <h1 class="hero__name reveal"><span lang="en">Your<br />Name</span><span lang="th">ชื่อ<br />นามสกุล</span></h1>
+      <h1 class="hero__name reveal">Paradon<br />Lambensa</h1>
 
-      <!-- [แก้] ตำแหน่ง -->
-      <p class="hero__role reveal"><span lang="en">Software Engineer</span><span lang="th">วิศวกรซอฟต์แวร์</span></p>
+      <p class="hero__role reveal"><span lang="en">Frontend Developer · Business IS Student</span><span lang="th">Frontend Developer · นักศึกษาระบบสารสนเทศทางธุรกิจ</span></p>
 
-      <!-- [แก้] ประโยคแนะนำตัวสั้น ๆ 1–2 บรรทัด -->
       <p class="hero__pitch reveal">
-        <span lang="en">I design and build web products end to end — from data model to the last pixel. Currently focused on performance, accessibility and developer tooling.</span><span lang="th">ผมออกแบบและสร้างเว็บตั้งแต่ต้นจนจบ — ตั้งแต่โครงสร้างข้อมูลไปจนถึงพิกเซลสุดท้าย ตอนนี้โฟกัสเรื่องความเร็ว การเข้าถึง และเครื่องมือสำหรับนักพัฒนา</span>
+        <span lang="en">Third-year Business Information Systems student at Prince of Songkla University. I build web projects that sit between what a business needs and what its users actually experience.</span><span lang="th">นักศึกษาชั้นปีที่ 3 สาขาการจัดการระบบสารสนเทศทางธุรกิจ มหาวิทยาลัยสงขลานครินทร์ สนใจงานออกแบบและพัฒนาเว็บไซต์ที่เชื่อมความต้องการทางธุรกิจเข้ากับประสบการณ์ผู้ใช้</span>
       </p>
 
       <div class="hero__cta reveal">
-        <!-- [แก้] อีเมล -->
-        <a class="btn btn--solid" href="mailto:you@example.com"><span lang="en">Get in touch</span><span lang="th">ติดต่อผม</span></a>
+        <a class="btn btn--solid" href="mailto:Pakapong.lam@gmail.com"><span lang="en">Get in touch</span><span lang="th">ติดต่อ</span></a>
         <button class="btn btn--ghost" id="printBtn2" type="button"><span lang="en">Download CV</span><span lang="th">ดาวน์โหลด CV</span></button>
       </div>
 
       <ul class="hero__meta reveal">
-        <!-- [แก้] ลิงก์โซเชียล — ลบอันที่ไม่ใช้ได้เลย -->
-        <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
-        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
-        <li><a href="https://example.com/" target="_blank" rel="noopener noreferrer"><span lang="en">Website ↗</span><span lang="th">เว็บไซต์ ↗</span></a></li>
+        <!-- [แก้] มี LinkedIn หรือช่องทางอื่นเพิ่ม ก๊อป <li> แล้วเติมได้เลย -->
+        <li><a href="https://github.com/paradonlambensa" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
       </ul>
     </div>
 
     <figure class="hero__portrait reveal">
-      <!-- [แก้] เปลี่ยนเป็นรูปจริง: วางไฟล์ใน assets/img/ แล้วแก้ src -->
-      <img src="assets/img/portrait.svg" alt="Portrait of Your Name" width="520" height="640" />
+      <img src="assets/img/portrait.png" alt="Paradon Lambensa" width="640" height="640" />
     </figure>
-  </div>
-
-  <div class="wrap">
-    <ul class="stats reveal">
-      <!-- [แก้] ตัวเลขที่อยากอวด — หรือลบทั้งบล็อกถ้าไม่ใช้ -->
-      <li><strong>5+</strong><span><span lang="en">Years building for the web</span><span lang="th">ปีในสายงานเว็บ</span></span></li>
-      <li><strong>20+</strong><span><span lang="en">Projects shipped to production</span><span lang="th">โปรเจคที่ขึ้นใช้งานจริง</span></span></li>
-      <li><strong>3</strong><span><span lang="en">Open-source tools maintained</span><span lang="th">เครื่องมือโอเพนซอร์สที่ดูแลอยู่</span></span></li>
-    </ul>
   </div>
 </section>
 
@@ -160,79 +141,15 @@
       <h2 class="section__title"><span lang="en">About</span><span lang="th">เกี่ยวกับ</span></h2>
     </div>
     <div class="section__body">
-      <!-- [แก้] ย่อหน้าแนะนำตัว 2–3 ย่อหน้า -->
       <p class="lead reveal">
-        <span lang="en">I'm a software engineer who likes the unglamorous parts: the query that was doing an N+1, the bundle that was 400&nbsp;kB too big, the form that nobody could use with a keyboard.</span><span lang="th">ผมเป็นวิศวกรซอฟต์แวร์ที่ชอบงานที่ไม่ค่อยมีใครอยากทำ — คิวรีที่ยิงซ้ำแบบ N+1, บันเดิลที่ใหญ่เกินไป 400&nbsp;kB, ฟอร์มที่ใช้คีย์บอร์ดกรอกไม่ได้</span>
+        <span lang="en">Third-year Business Information Systems Management student at Prince of Songkla University, with a working foundation in HTML, CSS and JavaScript.</span><span lang="th">นักศึกษาชั้นปีที่ 3 สาขาการจัดการระบบสารสนเทศทางธุรกิจ มหาวิทยาลัยสงขลานครินทร์ มีพื้นฐานด้าน HTML, CSS และ JavaScript</span>
       </p>
       <p class="reveal">
-        <span lang="en">Most of my work sits between the browser and the database — React and TypeScript on one side, Python and Postgres on the other. I care about writing code that the next person can read, and about shipping things that measurably work rather than things that merely demo well.</span><span lang="th">งานส่วนใหญ่ของผมอยู่ระหว่างเบราว์เซอร์กับฐานข้อมูล — ฝั่งหนึ่งเป็น React กับ TypeScript อีกฝั่งเป็น Python กับ Postgres ผมให้ความสำคัญกับการเขียนโค้ดที่คนถัดไปอ่านรู้เรื่อง และการส่งมอบของที่วัดผลได้จริง ไม่ใช่แค่เดโมแล้วดูดี</span>
+        <span lang="en">I'm drawn to web work that connects what a business needs with how people actually use it — which is why most of my projects start from a real problem rather than a tutorial.</span><span lang="th">สนใจงานออกแบบและพัฒนาเว็บไซต์ที่เชื่อมความต้องการทางธุรกิจเข้ากับประสบการณ์ผู้ใช้ โปรเจคส่วนใหญ่จึงเริ่มจากปัญหาจริง ไม่ได้เริ่มจากการทำตามบทเรียน</span>
       </p>
       <p class="reveal">
-        <span lang="en">Outside of work I maintain a couple of small open-source tools, and I write occasionally about performance and developer experience.</span><span lang="th">นอกเวลางานผมดูแลเครื่องมือโอเพนซอร์สเล็ก ๆ อยู่สองสามตัว และเขียนบทความเรื่องประสิทธิภาพกับประสบการณ์นักพัฒนาเป็นครั้งคราว</span>
+        <span lang="en">I work methodically, plan ahead, and deliver on time. Right now I'm looking for an internship where I can put what I've learned in class to work on something real.</span><span lang="th">ทำงานเป็นระบบ วางแผนล่วงหน้า และส่งงานตรงเวลาเสมอ กำลังมองหาโอกาสฝึกงานเพื่อนำความรู้จากห้องเรียนมาใช้กับงานจริง</span>
       </p>
-    </div>
-  </div>
-</section>
-
-<!-- ========================= EXPERIENCE ========================= -->
-<section class="section" id="experience">
-  <div class="wrap section__grid">
-    <div class="section__head">
-      <span class="section__num">02</span>
-      <h2 class="section__title"><span lang="en">Experience</span><span lang="th">ประสบการณ์</span></h2>
-    </div>
-    <div class="section__body">
-      <ol class="timeline">
-
-        <!-- [แก้] ก๊อปบล็อก <li class="job"> ทั้งก้อนเพื่อเพิ่มงานใหม่ -->
-        <li class="job reveal">
-          <div class="job__meta"><span lang="en"><time datetime="2023-01">Jan 2023</time> — Present</span><span lang="th"><time datetime="2023-01">ม.ค. 2023</time> — ปัจจุบัน</span></div>
-          <div class="job__main">
-            <h3 class="job__title"><span lang="en">Senior Software Engineer</span><span lang="th">วิศวกรซอฟต์แวร์อาวุโส</span></h3>
-            <p class="job__org"><span lang="en">Acme Technologies · Bangkok</span><span lang="th">Acme Technologies · กรุงเทพฯ</span></p>
-            <ul class="job__points">
-              <li><span lang="en">Led the rewrite of the customer dashboard, cutting median load time from 4.1s to 0.9s.</span><span lang="th">นำทีมเขียนแดชบอร์ดลูกค้าใหม่ ลดเวลาโหลดค่ากลางจาก 4.1 วิ เหลือ 0.9 วิ</span></li>
-              <li><span lang="en">Built a design-system package now used by four product teams.</span><span lang="th">สร้าง design system ที่ตอนนี้มีสี่ทีมใช้งานอยู่</span></li>
-              <li><span lang="en">Mentored three junior engineers through their first production launches.</span><span lang="th">ดูแลน้องจูเนียร์สามคนจนปล่อยงานขึ้นโปรดักชันครั้งแรกได้</span></li>
-            </ul>
-            <ul class="tags">
-              <li>TypeScript</li><li>React</li><li>Node.js</li><li>PostgreSQL</li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="job reveal">
-          <div class="job__meta"><span lang="en"><time datetime="2021-03">Mar 2021</time> — <time datetime="2022-12">Dec 2022</time></span><span lang="th"><time datetime="2021-03">มี.ค. 2021</time> — <time datetime="2022-12">ธ.ค. 2022</time></span></div>
-          <div class="job__main">
-            <h3 class="job__title"><span lang="en">Software Engineer</span><span lang="th">วิศวกรซอฟต์แวร์</span></h3>
-            <p class="job__org"><span lang="en">Northwind Labs · Remote</span><span lang="th">Northwind Labs · ทำงานทางไกล</span></p>
-            <ul class="job__points">
-              <li><span lang="en">Shipped the billing integration handling ~30k transactions a month.</span><span lang="th">ทำระบบเชื่อมต่อการเรียกเก็บเงินที่รองรับธุรกรรมราว 30,000 รายการต่อเดือน</span></li>
-              <li><span lang="en">Introduced end-to-end tests that caught regressions before three separate releases.</span><span lang="th">วางระบบเทส end-to-end ที่จับบั๊กได้ก่อนปล่อยของถึงสามรอบ</span></li>
-              <li><span lang="en">Reduced infrastructure spend by 22% by right-sizing background workers.</span><span lang="th">ลดค่าใช้จ่ายโครงสร้างพื้นฐานลง 22% ด้วยการปรับขนาด worker ให้พอดีงาน</span></li>
-            </ul>
-            <ul class="tags">
-              <li>Python</li><li>Django</li><li>Stripe</li><li>AWS</li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="job reveal">
-          <div class="job__meta"><span lang="en"><time datetime="2019-06">Jun 2019</time> — <time datetime="2021-02">Feb 2021</time></span><span lang="th"><time datetime="2019-06">มิ.ย. 2019</time> — <time datetime="2021-02">ก.พ. 2021</time></span></div>
-          <div class="job__main">
-            <h3 class="job__title"><span lang="en">Frontend Developer</span><span lang="th">นักพัฒนาฝั่งหน้าเว็บ</span></h3>
-            <p class="job__org"><span lang="en">Studio Meridian · Bangkok</span><span lang="th">Studio Meridian · กรุงเทพฯ</span></p>
-            <ul class="job__points">
-              <li><span lang="en">Built marketing sites and web apps for a dozen clients across retail and fintech.</span><span lang="th">ทำเว็บการตลาดและเว็บแอปให้ลูกค้าราวสิบกว่าราย ทั้งสายค้าปลีกและฟินเทค</span></li>
-              <li><span lang="en">Set the studio's accessibility baseline, taking every new build to WCAG 2.1 AA.</span><span lang="th">วางมาตรฐานการเข้าถึงของสตูดิโอ ทำให้งานใหม่ทุกชิ้นผ่าน WCAG 2.1 AA</span></li>
-            </ul>
-            <ul class="tags">
-              <li>JavaScript</li><li>Vue</li><li>SCSS</li><li>Figma</li>
-            </ul>
-          </div>
-        </li>
-
-      </ol>
     </div>
   </div>
 </section>
@@ -241,72 +158,110 @@
 <section class="section" id="projects">
   <div class="wrap section__grid">
     <div class="section__head">
-      <span class="section__num">03</span>
-      <h2 class="section__title"><span lang="en">Selected work</span><span lang="th">ผลงานที่คัดมา</span></h2>
+      <span class="section__num">02</span>
+      <h2 class="section__title"><span lang="en">Projects</span><span lang="th">ผลงาน</span></h2>
     </div>
     <div class="section__body">
       <div class="cards">
 
-        <!-- [แก้] ก๊อปบล็อก <article class="card"> ทั้งก้อนเพื่อเพิ่มผลงาน -->
         <article class="card reveal">
           <div class="card__top">
-            <h3 class="card__title">Cygnus</h3>
-            <span class="card__year">2025</span>
+            <h3 class="card__title">Cygnus AI</h3>
+            <span class="card__year">2026</span>
           </div>
           <p class="card__desc">
-            <span lang="en">A currency-conversion and pricing engine with live FX rates, slip parsing and an AI advisor layer. Handles the whole flow from uploaded receipt to final quote.</span><span lang="th">ระบบแปลงสกุลเงินและคิดราคา ดึงอัตราแลกเปลี่ยนสด อ่านสลิป และมีชั้น AI ช่วยให้คำแนะนำ ครอบคลุมตั้งแต่อัปโหลดสลิปจนถึงราคาสุดท้าย</span>
+            <span lang="en">An AI financial advisor for small retailers — turns POS sales data into advice a shop owner can actually act on.</span><span lang="th">ที่ปรึกษาการเงินด้วย AI สำหรับร้านค้ารายย่อย เปลี่ยนข้อมูลการขายจาก POS ให้เป็นคำแนะนำที่เจ้าของร้านเอาไปใช้ได้จริง</span>
           </p>
-          <ul class="tags"><li>Python</li><li>FastAPI</li><li>OCR</li></ul>
+          <ul class="job__points">
+            <li><span lang="en">Designed a hybrid architecture: Python computes every financial figure, the AI only interprets them.</span><span lang="th">ออกแบบสถาปัตยกรรมแบบ Hybrid — ให้ Python คำนวณตัวเลขการเงินทั้งหมด แล้ว AI ทำหน้าที่ตีความอย่างเดียว</span></li>
+            <li><span lang="en">Sends only aggregated numbers to the model, never raw records — lower PDPA exposure and fewer made-up answers.</span><span lang="th">ส่งเฉพาะตัวเลขสรุปให้โมเดล ไม่ส่งข้อมูลดิบ ลดความเสี่ยง PDPA และลดการตอบมั่ว</span></li>
+            <li><span lang="en">Reads receipts with vision OCR and converts them to CSV the dashboard can import directly.</span><span lang="th">อ่านสลิป/ใบเสร็จด้วย vision OCR แล้วแปลงเป็น CSV นำเข้าแดชบอร์ดได้ทันที</span></li>
+          </ul>
+          <ul class="tags"><li>Python</li><li>Streamlit</li><li>pandas</li><li>Plotly</li><li>Claude API</li></ul>
           <div class="card__links">
-            <a href="#" target="_blank" rel="noopener noreferrer"><span lang="en">Live ↗</span><span lang="th">เว็บจริง ↗</span></a>
-            <a href="#" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
+            <a href="https://github.com/paradonlambensa/Cygnus-AI" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
           </div>
         </article>
 
         <article class="card reveal">
           <div class="card__top">
             <h3 class="card__title">Knowbridge</h3>
-            <span class="card__year">2025</span>
+            <span class="card__year">2026</span>
           </div>
           <p class="card__desc">
-            <span lang="en">A retrieval layer that lets teams ask questions against their own documents, with citations back to the source paragraph.</span><span lang="th">ระบบค้นคืนข้อมูลที่ให้ทีมถามคำถามกับเอกสารของตัวเองได้ พร้อมอ้างอิงกลับไปถึงย่อหน้าต้นทาง</span>
+            <span lang="en">A skill-swap community platform: accounts, matching people who teach with people who want to learn, and chat between them.</span><span lang="th">แพลตฟอร์มชุมชนแลกเปลี่ยนทักษะ มีระบบสมาชิก จับคู่คนที่อยากสอนกับคนที่อยากเรียน และคุยกันได้ในเว็บ</span>
           </p>
-          <ul class="tags"><li>TypeScript</li><li>Next.js</li><li>pgvector</li></ul>
+          <ul class="job__points">
+            <li><span lang="en">Built the account system with express-session and bcrypt-hashed passwords.</span><span lang="th">ทำระบบสมาชิกด้วย express-session และเข้ารหัสรหัสผ่านด้วย bcrypt</span></li>
+            <li><span lang="en">Added real-time chat between members with Socket.IO.</span><span lang="th">ทำแชทเรียลไทม์ระหว่างสมาชิกด้วย Socket.IO</span></li>
+            <li><span lang="en">Wrote the whole frontend in plain HTML, CSS and JavaScript — no framework.</span><span lang="th">เขียนฝั่งหน้าเว็บด้วย HTML, CSS และ JavaScript ล้วน ไม่ใช้เฟรมเวิร์ก</span></li>
+          </ul>
+          <ul class="tags"><li>Node.js</li><li>Express</li><li>Socket.IO</li><li>MongoDB</li></ul>
           <div class="card__links">
-            <a href="#" target="_blank" rel="noopener noreferrer"><span lang="en">Live ↗</span><span lang="th">เว็บจริง ↗</span></a>
-            <a href="#" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
+            <a href="https://github.com/paradonlambensa/Knowbridge" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
           </div>
         </article>
 
         <article class="card reveal">
           <div class="card__top">
-            <h3 class="card__title">Ledgerlite</h3>
-            <span class="card__year">2024</span>
+            <h3 class="card__title"><span lang="en">This site</span><span lang="th">เว็บนี้</span></h3>
+            <span class="card__year">2026</span>
           </div>
           <p class="card__desc">
-            <span lang="en">A small double-entry bookkeeping library, built to make the accounting rules explicit and testable rather than buried in an ORM.</span><span lang="th">ไลบรารีบัญชีคู่ขนาดเล็ก ออกแบบให้กฎทางบัญชีชัดเจนและเทสได้ แทนที่จะซ่อนอยู่ใน ORM</span>
+            <span lang="en">The page you're reading. Static HTML, CSS and JavaScript with no framework and no build step.</span><span lang="th">หน้าที่คุณกำลังอ่านอยู่ เขียนด้วย HTML, CSS และ JavaScript ล้วน ไม่มีเฟรมเวิร์ก ไม่ต้อง build</span>
           </p>
-          <ul class="tags"><li>Rust</li><li>SQLite</li></ul>
+          <ul class="job__points">
+            <li><span lang="en">Thai/English toggle done in CSS, so the content still works with JavaScript off.</span><span lang="th">สลับภาษาไทย/อังกฤษด้วย CSS เพราะงั้นปิด JavaScript แล้วเนื้อหายังอ่านได้ครบ</span></li>
+            <li><span lang="en">A print stylesheet turns the page into a one-file PDF CV.</span><span lang="th">มี print stylesheet ที่เปลี่ยนหน้าเว็บให้เป็น CV แบบ PDF ได้เลย</span></li>
+          </ul>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
           <div class="card__links">
-            <a href="#" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
+            <a href="https://github.com/paradonlambensa/resume-site" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
           </div>
         </article>
 
         <article class="card reveal">
           <div class="card__top">
-            <h3 class="card__title">Typeset</h3>
-            <span class="card__year">2024</span>
+            <h3 class="card__title">Fullstack</h3>
+            <span class="card__year">2026</span>
           </div>
           <p class="card__desc">
-            <span lang="en">A CLI that turns Markdown notes into print-ready PDFs with proper typography — widows, orphans, optical margins and all.</span><span lang="th">เครื่องมือบรรทัดคำสั่งที่แปลงโน้ต Markdown เป็น PDF พร้อมพิมพ์ จัดตัวอักษรให้เรียบร้อยครบทุกรายละเอียด</span>
+            <span lang="en">Weekly exercises and assignments from my fullstack course, from plain HTML and CSS through to pages that talk to a server.</span><span lang="th">งานรายสัปดาห์และแบบฝึกหัดจากวิชา Fullstack ตั้งแต่ HTML/CSS พื้นฐาน ไปจนถึงหน้าเว็บที่ต่อกับฝั่งเซิร์ฟเวอร์</span>
           </p>
-          <ul class="tags"><li>Go</li><li>LaTeX</li></ul>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
           <div class="card__links">
-            <a href="#" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
+            <a href="https://github.com/paradonlambensa/Fullstack" target="_blank" rel="noopener noreferrer"><span lang="en">Code ↗</span><span lang="th">โค้ด ↗</span></a>
           </div>
         </article>
 
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= ACTIVITIES ========================= -->
+<section class="section" id="activities">
+  <div class="wrap section__grid">
+    <div class="section__head">
+      <span class="section__num">03</span>
+      <h2 class="section__title"><span lang="en">Activities</span><span lang="th">กิจกรรม</span></h2>
+    </div>
+    <div class="section__body">
+      <ol class="timeline">
+        <li class="job reveal">
+          <!-- [แก้] ใส่ปีที่ไปแข่งจริง — ตอนนี้ยังว่างอยู่ -->
+          <div class="job__meta"><span lang="en">Competition</span><span lang="th">การแข่งขัน</span></div>
+          <div class="job__main">
+            <h3 class="job__title">PSU Cyber Security</h3>
+            <p class="job__org"><span lang="en">Prince of Songkla University</span><span lang="th">มหาวิทยาลัยสงขลานครินทร์</span></p>
+            <ul class="job__points">
+              <!-- [แก้] เขียนเพิ่มว่าแข่งประเภทไหน ทำหน้าที่อะไรในทีม และผลออกมาเป็นยังไง
+                   บรรทัดล่างเขียนไว้กลาง ๆ เพราะยังไม่มีรายละเอียด -->
+              <li><span lang="en">Took part in the university's cyber security competition.</span><span lang="th">เข้าร่วมการแข่งขันด้านความมั่นคงปลอดภัยไซเบอร์ที่จัดโดยมหาวิทยาลัย</span></li>
+            </ul>
+          </div>
+        </li>
+      </ol>
     </div>
   </div>
 </section>
@@ -320,22 +275,23 @@
     </div>
     <div class="section__body">
       <div class="skills">
-        <!-- [แก้] แก้หัวข้อกลุ่มและรายการในแต่ละกลุ่ม -->
+        <!-- [แก้] ตัวไหนยังไม่มั่นใจว่าตอบคำถามสัมภาษณ์ได้ ลบทิ้งได้เลย
+             ที่ใส่ไว้คือของที่มีโค้ดใน repo รองรับจริง -->
         <div class="skills__group reveal">
-          <h3><span lang="en">Languages</span><span lang="th">ภาษาโปรแกรม</span></h3>
-          <ul class="tags tags--lg"><li>TypeScript</li><li>JavaScript</li><li>Python</li><li>Go</li><li>SQL</li></ul>
+          <h3><span lang="en">Web</span><span lang="th">เว็บ</span></h3>
+          <ul class="tags tags--lg"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
         </div>
         <div class="skills__group reveal">
-          <h3><span lang="en">Frontend</span><span lang="th">ฝั่งหน้าเว็บ</span></h3>
-          <ul class="tags tags--lg"><li>React</li><li>Next.js</li><li>Vue</li><li>Tailwind</li><li>Vite</li></ul>
+          <h3><span lang="en">Backend</span><span lang="th">หลังบ้าน</span></h3>
+          <ul class="tags tags--lg"><li>Node.js</li><li>Express</li><li>Socket.IO</li><li>MongoDB</li></ul>
         </div>
         <div class="skills__group reveal">
-          <h3><span lang="en">Backend &amp; data</span><span lang="th">ฝั่งหลังบ้านและข้อมูล</span></h3>
-          <ul class="tags tags--lg"><li>Node.js</li><li>FastAPI</li><li>PostgreSQL</li><li>Redis</li><li>Prisma</li></ul>
+          <h3><span lang="en">Python &amp; data</span><span lang="th">Python และข้อมูล</span></h3>
+          <ul class="tags tags--lg"><li>Python</li><li>Streamlit</li><li>pandas</li><li>Plotly</li></ul>
         </div>
         <div class="skills__group reveal">
-          <h3><span lang="en">Tooling</span><span lang="th">เครื่องมือ</span></h3>
-          <ul class="tags tags--lg"><li>Git</li><li>Docker</li><li>GitHub Actions</li><li>AWS</li><li>Playwright</li></ul>
+          <h3><span lang="en">Tools</span><span lang="th">เครื่องมือ</span></h3>
+          <ul class="tags tags--lg"><li>Git</li><li>GitHub</li><li>VS Code</li><li>Azure</li></ul>
         </div>
       </div>
     </div>
@@ -351,25 +307,17 @@
     </div>
     <div class="section__body">
       <ol class="timeline">
-        <!-- [แก้] วุฒิการศึกษา -->
         <li class="job reveal">
-          <div class="job__meta"><span lang="en"><time datetime="2015">2015</time> — <time datetime="2019">2019</time></span><span lang="th"><time datetime="2015">2558</time> — <time datetime="2019">2562</time></span></div>
+          <!-- [แก้] ถ้าอยากใส่ปีที่เข้า–ปีที่คาดว่าจบ เปลี่ยนบรรทัดนี้ เช่น "2024 — 2028" -->
+          <div class="job__meta"><span lang="en">3rd year · in progress</span><span lang="th">ชั้นปีที่ 3 · กำลังศึกษา</span></div>
           <div class="job__main">
-            <h3 class="job__title"><span lang="en">B.Eng. Computer Engineering</span><span lang="th">วศ.บ. วิศวกรรมคอมพิวเตอร์</span></h3>
-            <p class="job__org"><span lang="en">University Name · Bangkok</span><span lang="th">ชื่อมหาวิทยาลัย · กรุงเทพฯ</span></p>
-            <ul class="job__points">
-              <li><span lang="en">First-class honours. Thesis on incremental static analysis for JavaScript.</span><span lang="th">เกียรตินิยมอันดับหนึ่ง วิทยานิพนธ์เรื่องการวิเคราะห์โค้ดแบบ incremental สำหรับ JavaScript</span></li>
-            </ul>
+            <h3 class="job__title"><span lang="en">Business Information Systems Management</span><span lang="th">การจัดการระบบสารสนเทศทางธุรกิจ</span></h3>
+            <p class="job__org"><span lang="en">Prince of Songkla University</span><span lang="th">มหาวิทยาลัยสงขลานครินทร์</span></p>
+            <!-- [แก้] มี GPA / เกียรตินิยม / วิชาที่เด่น อยากใส่ ก๊อปบล็อกนี้เข้ามา:
+                 <ul class="job__points"><li><span lang="en">…</span><span lang="th">…</span></li></ul> -->
           </div>
         </li>
       </ol>
-
-      <!-- [แก้] ใบรับรอง / คอร์ส — ลบทั้งบล็อกได้ถ้าไม่มี -->
-      <h3 class="subhead reveal"><span lang="en">Certifications</span><span lang="th">ใบรับรอง</span></h3>
-      <ul class="certs">
-        <li class="reveal"><span>AWS Certified Solutions Architect — Associate</span><span class="certs__year">2024</span></li>
-        <li class="reveal"><span>Google Professional Cloud Developer</span><span class="certs__year">2023</span></li>
-      </ul>
     </div>
   </div>
 </section>
@@ -382,24 +330,19 @@
       <h2 class="section__title"><span lang="en">Contact</span><span lang="th">ติดต่อ</span></h2>
     </div>
     <div class="section__body">
-      <!-- [แก้] ประโยคชวนติดต่อ -->
       <p class="contact__lead reveal">
-        <span lang="en">Open to full-time roles and selected freelance work.<br />The fastest way to reach me is email.</span><span lang="th">เปิดรับงานประจำและงานฟรีแลนซ์บางส่วน<br />ติดต่อทางอีเมลจะเร็วที่สุด</span>
+        <span lang="en">Looking for an internship, and open to small freelance work.<br />Email is the fastest way to reach me.</span><span lang="th">กำลังมองหาที่ฝึกงาน และรับงานฟรีแลนซ์เล็ก ๆ ได้<br />ติดต่อทางอีเมลจะเร็วที่สุด</span>
       </p>
 
       <div class="contact__mail reveal">
-        <!-- [แก้] อีเมล (3 จุด: href, ข้อความ, และ data-email ของปุ่ม copy) -->
-        <a class="contact__addr" href="mailto:you@example.com">you@example.com</a>
+        <a class="contact__addr" href="mailto:Pakapong.lam@gmail.com">Pakapong.lam@gmail.com</a>
         <button class="btn btn--ghost btn--sm" id="copyEmail" type="button"
-                data-email="you@example.com"
+                data-email="Pakapong.lam@gmail.com"
                 data-copied-en="Copied" data-copied-th="คัดลอกแล้ว"><span lang="en">Copy</span><span lang="th">คัดลอก</span></button>
       </div>
 
       <ul class="contact__links reveal">
-        <!-- [แก้] ลิงก์ติดต่อ -->
-        <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
-        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
-        <li><a href="https://x.com/" target="_blank" rel="noopener noreferrer">X ↗</a></li>
+        <li><a href="https://github.com/paradonlambensa" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
       </ul>
     </div>
   </div>
@@ -408,25 +351,25 @@
 
 <footer class="footer">
   <div class="wrap footer__inner">
-    <!-- [แก้] ชื่อใน footer -->
-    <span>© <span id="year">2026</span> <span lang="en">Your Name</span><span lang="th">ชื่อ นามสกุล</span></span>
+    <span>© <span id="year">2026</span> Paradon Lambensa</span>
     <span class="footer__note"><span lang="en">Built from scratch — HTML, CSS, a little JavaScript.</span><span lang="th">เขียนเองทั้งหมด — HTML, CSS และ JavaScript นิดหน่อย</span></span>
     <a href="#top" class="footer__top"><span lang="en">Back to top ↑</span><span lang="th">กลับขึ้นบน ↑</span></a>
   </div>
 </footer>
 
-<!-- [แก้] JSON-LD ช่วยให้ Google เข้าใจว่าหน้านี้คือโปรไฟล์ของใคร -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Your Name",
-  "jobTitle": "Software Engineer",
-  "email": "mailto:you@example.com",
-  "url": "https://example.com/",
-  "address": { "@type": "PostalAddress", "addressLocality": "Bangkok", "addressCountry": "TH" },
+  "name": "Paradon Lambensa",
+  "jobTitle": "Business Information Systems Student",
+  "email": "mailto:Pakapong.lam@gmail.com",
+  "url": "https://paradonlambensa.github.io/resume-site/",
+  "image": "https://paradonlambensa.github.io/resume-site/assets/img/portrait.png",
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Prince of Songkla University" },
+  "address": { "@type": "PostalAddress", "addressCountry": "TH" },
   "knowsLanguage": ["th", "en"],
-  "sameAs": ["https://github.com/", "https://www.linkedin.com/"]
+  "sameAs": ["https://github.com/paradonlambensa"]
 }
 </script>
 

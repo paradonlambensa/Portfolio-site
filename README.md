@@ -1,4 +1,4 @@
-# Resume Site
+# Resume Site — Paradon Lambensa
 
 เว็บ resume / portfolio หน้าเดียว เขียนด้วย HTML + CSS + JavaScript ล้วน
 ไม่มี framework ไม่มี build step ไม่มี dependency — เปิดไฟล์ `index.html` ก็ใช้ได้เลย
@@ -12,35 +12,42 @@ resume-site/
 │   ├── css/style.css       ← สไตล์ทั้งหมด (สีอยู่ใน :root ด้านบนสุด)
 │   ├── js/main.js          ← theme toggle, scroll-spy, animation, copy email
 │   └── img/
-│       ├── portrait.svg    ← รูป placeholder — เปลี่ยนเป็นรูปจริง
-│       └── favicon.svg     ← ไอคอนแท็บ (แก้อักษรย่อข้างใน)
+│       ├── portrait.png    ← รูปโปรไฟล์ (crop เป็นจัตุรัส 640×640 พอดีวงแหวน)
+│       └── favicon.svg      ← ไอคอนแท็บ (แก้อักษรย่อข้างใน)
 ├── .nojekyll               ← บอก GitHub Pages ไม่ต้องประมวลผลด้วย Jekyll
 └── README.md
 ```
 
+## โครงหน้าเว็บ
+
+`01 About` · `02 Projects` · `03 Activities` · `04 Skills` · `05 Education` · `06 Contact`
+
 ## เริ่มแก้ยังไง
 
-เนื้อหาตอนนี้เป็นข้อมูลตัวอย่างทั้งหมด **ทุกจุดที่ต้องแก้มีคอมเมนต์ `[แก้]` กำกับไว้**
-เปิด `index.html` แล้วกด Ctrl+F หา `[แก้]` ไล่แก้ทีละจุดได้เลย
+เนื้อหาเป็นข้อมูลจริงแล้ว เหลือจุดที่ยังต้องเติม ซึ่งมีคอมเมนต์ **`[แก้]`** กำกับไว้
+เปิด `index.html` กด Ctrl+F หา `[แก้]` ไล่ดูได้เลย ตอนนี้เหลือ:
 
-ลำดับที่แนะนำ:
+- **PSU Cyber Security** — ปีที่ไปแข่ง ประเภทการแข่ง บทบาทในทีม และผลการแข่ง
+- **Education** — ปีที่เข้า/คาดว่าจบ และ GPA ถ้าอยากใส่
+- **ลิงก์ติดต่อ** — ตอนนี้มีแค่ GitHub จะเพิ่ม LinkedIn ก็ก๊อป `<li>` มาเติม
+- **`og:url` / `og:image`** — ชี้ไป GitHub Pages ไว้แล้ว ถ้า deploy ที่อื่นต้องแก้
 
-1. `<title>` และ meta tags บนสุด — ชื่อ + ตำแหน่ง
-2. Hero — ชื่อ, ตำแหน่ง, ประโยคแนะนำตัว, อีเมล, ลิงก์โซเชียล
-3. About → Experience → Projects → Skills → Education → Contact
-4. JSON-LD ท้ายไฟล์ — ข้อมูลเดียวกัน แต่ให้ Google อ่าน
-5. `assets/img/favicon.svg` — เปลี่ยน `YN` เป็นอักษรย่อของคุณ
-6. `assets/img/portrait.svg` — ลบทิ้งแล้ววางรูปจริง จากนั้นแก้ `src` ใน hero
+เพิ่มผลงาน: ก๊อป `<article class="card">` ทั้งก้อน
+เพิ่มกิจกรรม/ประสบการณ์: ก๊อป `<li class="job">` ทั้งก้อน
 
-เพิ่มงาน/ผลงานใหม่: ก๊อปบล็อก `<li class="job">` หรือ `<article class="card">` ทั้งก้อนแล้วแก้ข้างใน
+> ถ้าได้งานฝึกงานแล้ว แนะนำให้เพิ่ม section `Experience` ไว้ก่อน `Projects`
+> โดยก๊อปโครง `<section class="section">` ของ Activities มาทั้งก้อน แล้วไล่เลขหัวข้อใหม่
+> (`section__num`) กับเพิ่มลิงก์ใน nav ให้ตรงลำดับด้วย — scroll-spy อ่านลำดับจาก nav
 
 ### สองภาษา (ไทย / อังกฤษ)
 
-ข้อความทุกจุดเก็บไว้คู่กันใน HTML แบบนี้ — แก้ทั้งสองอัน:
+ข้อความที่ต้องแปลเก็บไว้คู่กันใน HTML แบบนี้ — แก้ทั้งสองอัน:
 
 ```html
-<span lang="en">Software Engineer</span><span lang="th">วิศวกรซอฟต์แวร์</span>
+<span lang="en">Looking for an internship</span><span lang="th">กำลังหาที่ฝึกงาน</span>
 ```
+
+ชื่อคน ชื่อโปรเจค และชื่อเทคโนโลยี ไม่ต้องแปล ปล่อยไว้อันเดียวได้เลย
 
 CSS จะซ่อนภาษาที่ไม่ได้เลือกให้เอง (ดู `:root[lang="en"] [lang="th"]` ใน `style.css`)
 ปุ่มสลับอยู่บน nav และจำภาษาที่เลือกไว้ ถ้ายังไม่เคยเลือกจะเดาจากภาษาเบราว์เซอร์
@@ -72,8 +79,8 @@ python -m http.server 5173
 
 - **สองภาษา ไทย/อังกฤษ** — สลับได้จาก nav จำค่าไว้ ครั้งแรกเดาจากภาษาเบราว์เซอร์ ข้อความทั้งสองภาษาอยู่ใน HTML จริง ไม่ได้ render ด้วย JS
 - **โหมดสว่าง/มืด** — ตามค่าระบบ กดสลับเองได้ และจำค่าไว้
-- **Download CV** — ปุ่มนี้เรียก `window.print()` ซึ่งมี print stylesheet จัดหน้าให้เป็น CV แบบพอดีกระดาษ (ซ่อน nav/ปุ่ม/รูป, บีบ 2 คอลัมน์, พิมพ์ URL ต่อท้ายลิงก์) — กด Ctrl+P แล้วเลือก "Save as PDF"
-- **Scroll-spy** — เมนูด้านบนไฮไลต์ section ที่กำลังดูอยู่
+- **Download CV** — ปุ่มนี้เรียก `window.print()` ซึ่งมี print stylesheet จัดหน้าให้เป็น CV แบบพอดีกระดาษ (ซ่อน nav/ปุ่ม, ย่อรูปเหลือ 82pt, บีบผลงานเป็น 2 คอลัมน์, พิมพ์ URL ต่อท้ายลิงก์) — กด Ctrl+P แล้วเลือก "Save as PDF" พิมพ์ออกมาเป็นภาษาที่เลือกอยู่ตอนนั้น
+- **Scroll-spy** — เมนูด้านบนไฮไลต์ section ที่กำลังดูอยู่ ใช้ "เส้นอ่าน" ที่ 20% ของจอ ไม่ใช่ขอบบน เพราะ section ท้าย ๆ ของหน้าสั้นเลื่อนไปชิดบนไม่ได้ และจะไม่มีทางถูกไฮไลต์เลย
 - **Progress bar** ด้านบนสุด + animation ตอน scroll (ปิดเองอัตโนมัติถ้าผู้ใช้ตั้งค่า reduce motion)
 - **Responsive** — ตรวจแล้วที่ 375px และ 1280px ไม่มี scroll แนวนอน
 - **SEO** — meta description, Open Graph, JSON-LD `Person`
@@ -81,19 +88,19 @@ python -m http.server 5173
 
 ## Deploy ขึ้น GitHub Pages
 
+repo อยู่ที่ https://github.com/paradonlambensa/resume-site แล้ว เหลือแค่เปิด Pages:
+
+**Settings → Pages → Source: Deploy from a branch → main / (root)**
+
+รอสักครู่จะได้ URL `https://paradonlambensa.github.io/resume-site/`
+ซึ่งตรงกับที่ตั้งไว้ใน `og:url` และ JSON-LD อยู่แล้ว ไม่ต้องแก้อะไรเพิ่ม
+
+ครั้งต่อ ๆ ไปแค่ push ก็ deploy เอง:
+
 ```bash
 git add -A
-git commit -m "my resume"
-git remote add origin https://github.com/<user>/<repo>.git
-git push -u origin main
+git commit -m "update resume"
+git push
 ```
-
-จากนั้นในหน้า repo → **Settings → Pages → Source: Deploy from a branch → main / (root)**
-รอสักครู่จะได้ URL `https://<user>.github.io/<repo>/`
-
-อย่าลืมกลับมาแก้ `og:url` กับ `og:image` ใน `index.html` ให้เป็น URL จริง
-ไม่งั้นตอนแชร์ลิงก์จะไม่ขึ้นรูปตัวอย่าง
-
-> ถ้าอยากได้ URL สั้นแบบ `https://<user>.github.io/` ให้ตั้งชื่อ repo เป็น `<user>.github.io`
 
 ทางเลือกอื่น: Netlify หรือ Vercel — ลากโฟลเดอร์นี้ทั้งอันไปวางได้เลย ไม่ต้องตั้งค่า build อะไร

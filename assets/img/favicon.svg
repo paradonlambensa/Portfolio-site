@@ -8,6 +8,6 @@
     }
   </style>
   <rect class="plate" width="64" height="64" rx="12" />
-  <!-- [แก้] เปลี่ยน YN เป็นอักษรย่อของคุณ -->
-  <text class="mark" x="32" y="41" text-anchor="middle">YN</text>
+  <!-- [แก้] อักษรย่อบนไอคอนแท็บ -->
+  <text class="mark" x="32" y="41" text-anchor="middle">PL</text>
 </svg>
