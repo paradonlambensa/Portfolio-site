@@ -60,6 +60,15 @@
 </head>
 
 <body>
+<!-- ฉากหลัง 3 ชั้นซ้อนกัน: แสงสี → เส้นกริด → เกรน
+     ทั้งหมดเป็นงานตกแต่งล้วน ไม่รับคลิก และถูกซ่อนตอนสั่งพิมพ์ -->
+<div class="bg" aria-hidden="true">
+  <div class="bg__glow bg__glow--a"></div>
+  <div class="bg__glow bg__glow--b"></div>
+  <div class="bg__grid"></div>
+  <div class="bg__grain"></div>
+</div>
+
 <div class="progress" id="progress" aria-hidden="true"></div>
 <a class="skip-link" href="#main"><span lang="en">Skip to content</span><span lang="th">ข้ามไปที่เนื้อหา</span></a>
 

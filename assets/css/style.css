@@ -18,6 +18,15 @@
   --accent-soft: rgba(215, 53, 43, 0.08);
   --shadow:      0 1px 2px rgba(17, 17, 16, 0.04), 0 8px 24px rgba(17, 17, 16, 0.05);
 
+  /* ชั้นตกแต่งฉากหลัง — สีฟ้าหยิบมาจากขอบวงในรูปโปรไฟล์ ให้มันเป็นชุดเดียวกัน */
+  --glow-a:      rgba(215, 53, 43, 0.14);
+  --glow-b:      rgba(45, 95, 143, 0.15);
+  --grid-line:   rgba(17, 17, 16, 0.05);
+  --grain:       0.5;
+  --grain-blend: multiply;
+  --spot:        rgba(215, 53, 43, 0.08);
+  --lift:        rgba(45, 95, 143, 0.28);
+
   --font-sans: "Inter", "IBM Plex Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   /* IBM Plex Sans Thai ต้องอยู่ในสแต็ก mono ด้วย เพราะ JetBrains Mono ไม่มีสระไทย
      และมีข้อความไทยใช้ฟอนต์นี้อยู่ (วันที่ในไทม์ไลน์, สถานะใต้ nav) */
@@ -41,6 +50,14 @@
     --accent:      #ff6a5e;
     --accent-soft: rgba(255, 106, 94, 0.12);
     --shadow:      0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+
+    --glow-a:      rgba(255, 106, 94, 0.15);
+    --glow-b:      rgba(74, 140, 205, 0.16);
+    --grid-line:   rgba(243, 242, 237, 0.055);
+    --grain:       0.3;
+    --grain-blend: overlay;
+    --spot:        rgba(255, 106, 94, 0.10);
+    --lift:        rgba(0, 0, 0, 0.65);
   }
 }
 
@@ -55,6 +72,14 @@
   --accent:      #ff6a5e;
   --accent-soft: rgba(255, 106, 94, 0.12);
   --shadow:      0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  --glow-a:      rgba(255, 106, 94, 0.15);
+  --glow-b:      rgba(74, 140, 205, 0.16);
+  --grid-line:   rgba(243, 242, 237, 0.055);
+  --grain:       0.3;
+  --grain-blend: overlay;
+  --spot:        rgba(255, 106, 94, 0.10);
+  --lift:        rgba(0, 0, 0, 0.65);
 }
 
 /* ------------------------------- 2. base -------------------------------- */
@@ -148,6 +173,75 @@ section[id] { scroll-margin-top: 72px; }
   background: var(--accent);
   z-index: 60;
   transition: width 0.08s linear;
+}
+
+/* --------------------------- 3b. ฉากหลัง (ตกแต่ง) ------------------------
+   ซ้อนกันสามชั้น ไล่จากหลังมาหน้า: แสงสี → เส้นกริด → เกรนกระดาษ
+   ทั้งก้อนเป็น position:fixed เลยอยู่นิ่งตอนเลื่อน ทำให้เนื้อหารู้สึกลอยอยู่เหนือมัน
+   ------------------------------------------------------------------------ */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* เนื้อหาต้องอยู่เหนือ .bg — nav มี z-index ของตัวเองอยู่แล้ว */
+main, .footer { position: relative; z-index: 1; }
+
+/* ชั้น 1 — ดวงแสงเบลอ ๆ สองดวง ลอยช้า ๆ ให้พื้นหลังไม่นิ่งสนิท */
+.bg__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+}
+.bg__glow--a {
+  width: 46vw; height: 46vw; min-width: 320px; min-height: 320px;
+  top: -14vw; right: -8vw;
+  background: var(--glow-a);
+  animation: drift 24s ease-in-out infinite;
+}
+.bg__glow--b {
+  width: 40vw; height: 40vw; min-width: 280px; min-height: 280px;
+  top: 32vh; left: -12vw;
+  background: var(--glow-b);
+  animation: drift 31s ease-in-out infinite reverse;
+}
+/* เลื่อนอย่างเดียว ไม่ใส่ scale — scale บน element ที่ filter:blur อยู่
+   บังคับให้เบราว์เซอร์คำนวณเบลอใหม่ทุกเฟรม ส่วน translate ปล่อยให้ compositor จัดการได้เลย */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(-4vw, 5vh, 0); }
+}
+
+/* ชั้น 2 — เส้นกริดแนวตั้ง 6 เส้น ล็อกตรงกับความกว้างเนื้อหา
+   เป็นการเอาโครงกริดที่ใช้จัดหน้าอยู่แล้วมาโชว์จาง ๆ ไม่ใช่ลายมั่ว */
+.bg__grid {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - var(--gutter) * 2);
+  max-width: calc(var(--wrap) - var(--gutter) * 2);
+  background-image: linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px);
+  background-size: calc(100% / 6) 100%;
+  border-right: 1px solid var(--grid-line);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 78%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 78%, transparent);
+}
+
+/* ชั้น 3 — เกรนกระดาษ ทำให้พื้นสีเรียบ ๆ มีผิวสัมผัส ไม่แบนจนเกินไป */
+.bg__grain {
+  position: absolute;
+  inset: 0;
+  opacity: var(--grain);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+/* ผู้ใช้ปิด animation ไว้ — ให้แสงอยู่นิ่ง แต่ยังคงมีมิติ */
+@media (prefers-reduced-motion: reduce) {
+  .bg__glow { animation: none; }
 }
 
 /* ---------------------------- 4. components ----------------------------- */
@@ -314,7 +408,24 @@ section[id] { scroll-margin-top: 72px; }
 /* ----------------------------- 5. sections ------------------------------ */
 
 /* --- hero --- */
-.hero { padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 6vw, 80px); }
+.hero { position: relative; padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 6vw, 80px); }
+
+/* ไฟส่องตามเมาส์ — JS เป็นคนตั้ง --mx/--my ให้
+   เฉพาะเครื่องที่มีเมาส์จริง มือถือไม่มี hover ก็ไม่ต้องโหลดอะไรเพิ่ม */
+@media (hover: hover) {
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 35%), var(--spot), transparent 68%);
+    opacity: 0;
+    transition: opacity 0.45s var(--ease);
+    pointer-events: none;
+  }
+  .hero:hover::before { opacity: 1; }
+}
+/* ข้อความกับรูปต้องอยู่เหนือไฟส่อง ไม่งั้นโดนทับ */
+.hero__text, .hero__portrait { position: relative; z-index: 1; }
 
 .hero__grid {
   display: grid;
@@ -392,6 +503,9 @@ section[id] { scroll-margin-top: 72px; }
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
+  /* เงานุ่ม ๆ ใต้รูป ทำให้วงกลมดูลอยขึ้นมาจากพื้น ไม่ใช่แปะติดอยู่เฉย ๆ */
+  box-shadow: 0 26px 70px -24px var(--lift);
+  will-change: transform;
 }
 
 /* --- stats --- */
@@ -469,6 +583,7 @@ section[id] { scroll-margin-top: 72px; }
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -476,14 +591,28 @@ section[id] { scroll-margin-top: 72px; }
   background: var(--bg-alt);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  /* การ์ดยกตัวขึ้นจากพื้นเล็กน้อยตลอดเวลา แล้วยกมากขึ้นตอน hover */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   transition: transform 0.25s var(--ease), border-color 0.25s var(--ease),
               box-shadow 0.25s var(--ease);
+}
+/* ขีดสี accent บาง ๆ บนขอบบน โผล่ตอน hover */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: var(--radius) var(--radius) 0 0;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
 }
 .card:hover {
   transform: translateY(-3px);
   border-color: var(--ink-3);
   box-shadow: var(--shadow);
 }
+.card:hover::before { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .card:hover { transform: none; } }
 
 .card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -591,6 +720,11 @@ section[id] { scroll-margin-top: 72px; }
 @media (max-width: 720px) {
   :root { --gutter: 16px; }
 
+  /* มือถือ: หยุดแสงลอย แต่ยังเห็นแสงอยู่ — เบลอสองก้อนขยับตลอดเวลากินแบตเปล่า ๆ
+     และลดเส้นกริดเหลือ 3 เส้น ไม่งั้นแน่นเกินไปบนจอแคบ */
+  .bg__glow { animation: none; }
+  .bg__grid { background-size: calc(100% / 3) 100%; }
+
   .nav__actions .nav__burger { display: grid; }
   .nav__brandname { display: none; }
   /* nav แน่นเกินไปเมื่อมีปุ่มภาษาเพิ่มเข้ามา — ตัดปุ่มนี้ออก เพราะ hero มีให้อยู่แล้ว */
@@ -627,9 +761,13 @@ section[id] { scroll-margin-top: 72px; }
     --ink-3: #555; --line: #ccc; --accent: #000; --shadow: none;
   }
 
-  /* รูปถ่ายเก็บไว้ตอนพิมพ์ เพราะ CV ไทยส่วนใหญ่ติดรูป */
+  /* รูปถ่ายเก็บไว้ตอนพิมพ์ เพราะ CV ไทยส่วนใหญ่ติดรูป
+     ส่วนฉากหลังตกแต่งเอาออกให้หมด ไม่งั้นเปลืองหมึกและอ่านยาก */
+  .bg, .hero::before, .card::before,
   .nav, .progress, .skip-link, .hero__cta, .footer__top,
   .card__links, .stats { display: none !important; }
+
+  .card, .hero__portrait img { box-shadow: none !important; }
 
   body { font-size: 10.5pt; line-height: 1.45; background: #fff; }
   .js .reveal { opacity: 1 !important; transform: none !important; }

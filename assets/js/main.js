@@ -105,6 +105,8 @@
       progress.style.width = (max > 0 ? Math.min(y / max, 1) * 100 : 0) + '%';
     }
 
+    parallax(y);
+
     // active = section สุดท้ายที่ขอบบนขึ้นมาเหนือ "เส้นอ่าน" (ใต้ nav ลงมา 20% ของจอ)
     // ใช้เส้นอ่านแทนขอบบนจอเฉย ๆ เพราะบนหน้าสั้น section ท้าย ๆ เลื่อนไปชิดบนไม่ได้
     // เลยไม่มีทางถูกไฮไลต์เลยสักครั้ง
@@ -155,6 +157,38 @@
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 
     for (var m = 0; m < revealables.length; m++) observer.observe(revealables[m]);
+  }
+
+  /* --------------------- ลูกเล่นฉากหลัง (ตกแต่งล้วน) --------------------- */
+  var hero = document.querySelector('.hero');
+  var portrait = document.querySelector('.hero__portrait img');
+  var finePointer = window.matchMedia('(hover: hover)').matches;
+
+  // ไฟส่องตามเมาส์ใน hero — ส่งตำแหน่งเป็น % ให้ CSS ผ่าน custom property
+  // เขียนค่าแค่รอบละครั้งต่อเฟรม ไม่งั้น mousemove จะยิงถี่เกินจำเป็น
+  if (hero && finePointer && !reduceMotion) {
+    var spotPending = false;
+    var spotX = 0, spotY = 0;
+
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      spotX = ((e.clientX - r.left) / r.width) * 100;
+      spotY = ((e.clientY - r.top) / r.height) * 100;
+      if (spotPending) return;
+      spotPending = true;
+      window.requestAnimationFrame(function () {
+        hero.style.setProperty('--mx', spotX + '%');
+        hero.style.setProperty('--my', spotY + '%');
+        spotPending = false;
+      });
+    }, { passive: true });
+  }
+
+  // รูปโปรไฟล์ขยับช้ากว่าหน้าเว็บนิดหน่อยตอนเลื่อน ให้รู้สึกมีระยะ
+  // ต้องขยับที่ <img> ไม่ใช่ <figure> เพราะ figure มี class reveal ที่ใช้ transform อยู่
+  function parallax(y) {
+    if (!portrait || reduceMotion) return;
+    portrait.style.transform = 'translate3d(0,' + (y * -0.05).toFixed(1) + 'px,0)';
   }
 
   /* ----------------------------- copy email ----------------------------- */
