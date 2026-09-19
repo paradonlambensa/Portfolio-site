@@ -191,6 +191,52 @@
     portrait.style.transform = 'translate3d(0,' + (y * -0.05).toFixed(1) + 'px,0)';
   }
 
+  /* --------------------- mailto ที่ไม่มีอะไรเกิดขึ้น ---------------------
+     เครื่องที่ไม่ได้ตั้งโปรแกรมอีเมลไว้ (เจอบ่อยมากบน Windows และคนที่ใช้ Gmail
+     ผ่านเบราว์เซอร์เฉย ๆ) กด mailto แล้วจะเงียบสนิท ไม่มี error ไม่มีอะไรเลย
+     เช็กด้วยการดูว่าหน้าเว็บเสียโฟกัสไหมหลังคลิก — ถ้าไม่เสีย แปลว่าไม่มีอะไรเปิดขึ้นมา
+     แล้วค่อยพาไปที่ช่องติดต่อพร้อมคัดลอกอีเมลให้ จะได้ไม่เป็นทางตัน
+     ---------------------------------------------------------------------- */
+  var contactSection = document.getElementById('contact');
+  var contactAddr = document.querySelector('.contact__addr');
+  var flashTimer = null;
+
+  function mailtoFallback() {
+    if (contactSection) {
+      contactSection.scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        block: 'center'
+      });
+    }
+    if (copyBtn) copyBtn.click();           // คัดลอกให้เลย จะได้เอาไปวางในเว็บเมลได้
+    if (contactAddr) {
+      contactAddr.classList.remove('is-flash');
+      void contactAddr.offsetWidth;          // บังคับ reflow ให้ animation เล่นซ้ำได้
+      contactAddr.classList.add('is-flash');
+      // ต้องถอดคลาสออกด้วย ไม่งั้นคนที่ตั้ง reduce motion จะโดนไฮไลต์ค้างถาวร
+      // (โหมดนั้นไม่มี animation ใช้การทาพื้นหลังไว้เฉย ๆ แทน)
+      clearTimeout(flashTimer);
+      flashTimer = setTimeout(function () {
+        contactAddr.classList.remove('is-flash');
+      }, 1800);
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="mailto:"]'), function (a) {
+    a.addEventListener('click', function () {
+      var leftPage = false;
+      var mark = function () { leftPage = true; };
+      window.addEventListener('blur', mark);
+      document.addEventListener('visibilitychange', mark);
+
+      setTimeout(function () {
+        window.removeEventListener('blur', mark);
+        document.removeEventListener('visibilitychange', mark);
+        if (!leftPage) mailtoFallback();
+      }, 700);
+    });
+  });
+
   /* ----------------------------- copy email ----------------------------- */
   var copyBtn = document.getElementById('copyEmail');
   if (copyBtn) {

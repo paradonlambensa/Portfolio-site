@@ -702,6 +702,16 @@ main, .footer { position: relative; z-index: 1; }
 }
 .contact__addr:hover { color: var(--accent); }
 
+/* กะพริบเรียกสายตา ตอนที่กดปุ่มติดต่อแล้ว mailto ไม่ทำงาน แล้วระบบพามาที่นี่แทน */
+.contact__addr.is-flash { animation: flash 1.6s var(--ease); }
+@keyframes flash {
+  0%, 100% { background: transparent; }
+  15%, 55% { background: var(--accent-soft); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact__addr.is-flash { animation: none; background: var(--accent-soft); }
+}
+
 .contact__links { display: flex; flex-wrap: wrap; gap: 22px; }
 .contact__links a {
   font-family: var(--font-mono);
